@@ -1,10 +1,3 @@
-'''
-Things this program needs to do:
-[]	Display neat title "DnDice by sixsixseven and License MIT"
-[]	Ask user for number of dice
-[]	Ask user for size of dice
-[]	Print the roll to the screen
-'''
 #	IMPORTS
 import secrets
 import os
@@ -18,23 +11,37 @@ def clear():
 	title()
 
 def dicer():
-	"""Main dice logic."""
-	clear()
-	dice = []
-	total = 0
-	#	How many dice, and what size?
-	h = input("How many dice? > ")
-	i = input("What size of die? > ")
-	#	Roll, increment the total, then append the value of each die into 'dice'.
-	for count in range(int(h)):
-		roll = secrets.randbelow(int(i)) + 1	#	The +1 moves the index away from 0.
-		total += roll
-		dice.append(roll)
+	"""Main dice logic. Accepts no arguments."""
+	looper = True
+	while looper:
+		looper = False
+		clear()
+		dice = []
+		total = 0
+		looper = True
 
-	rollAverage = sum(dice)/len(dice)
-	print(f"\nYou rolled the following: {h}d{i}")
-	print(f"The face(s) of your dice read: {str(dice)[1:-1]}")
-	print(f"The total of your dice are: {total}\n")
+		#	How many dice, and what size? And;
+		#	Roll, increment the total, then append the value of each die into 'dice'.
+		h = input("How many dice? (1 - 1000) > ")
+		if h.isdigit() == True and int(h) >= 1 and int(h) <= 1000:
+			i = input("What size of die? 1 - 1000) > ")
+			if i.isdigit() == True and int(i) >= 1 and int(i) <= 1000:
+				for count in range(int(h)):
+					roll = secrets.randbelow(int(i)) + 1	#	The +1 moves the index away from 0 and into the range we specify.
+					total += roll
+					dice.append(roll)
+
+				print(f"\nYou rolled the following: {h}d{i}")
+				#	Make conditional print here, if len(dice) == 1, then print "The face of your die reads:"
+				print(f"The face(s) of your dice read: {str(dice)[1:-1]}")
+				print(f"The total of your dice are: {total}\n")
+				looper = False
+			else:
+				print(input("Your die size was outside the allowable range. Press Return to try again."))	
+				looper = True
+		else:
+			print(input("Your dice count was outside the allowable range. Press Return to try again."))
+			looper = True
 
 
 def title():
