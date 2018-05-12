@@ -7,21 +7,43 @@ Things this program needs to do:
 '''
 #	IMPORTS
 import secrets
+import os
 
 
 
 #	FUNCTIONS (Alphabetical)
+def clear():
+	"""Clears the display buffer and resets the title. Better GUI."""
+	os.system('clear')
+	title()
+
 def dicer():
 	"""Main dice logic."""
-	#	How many dice?
+	clear()
+	dice = []
+	total = 0
+	#	How many dice, and what size?
 	h = input("How many dice? > ")
-	#	What size of die?
 	i = input("What size of die? > ")
-	#	Return the value of each die, and the total.
+	#	Append the value of each die into 'dice'.
+	for count in range(int(h)):
+		roll = secrets.randbelow(int(i) + 1)
+		total += roll
+		dice.append(roll)
+
+	print(f"\nYou rolled the following: {h}d{i}.")
+	print(f"The face(s) of your dice read: {str(dice)[1:-1]}")
+	print(f"The total of your dice are: {total}\n")
+
 
 def title():
 	"""Prints a nifty title. But not just yet."""
-	pass
+	print(" ____        ____  _          ")
+	print("|  _ \\ _ __ |  _ \\(_) ___ ___ ")
+	print("| | | | '_ \\| | | | |/ __/ _ \\")
+	print("| |_| | | | | |_| | | (_|  __/")
+	print("|____/|_| |_|____/|_|\\___\\___|")
+	print("by: sixsixseven\t  License: MIT\n")                               
 	
 def yesno(i):
 	"""Handles yes/no logic. Accepts exactly 1 string argument in the
@@ -40,4 +62,9 @@ def yesno(i):
 
 
 #	MAIN
-dicer()
+gamestate = True
+
+while gamestate == True:
+	title()
+	dicer()
+	gamestate = yesno("Would you like to roll more?")
