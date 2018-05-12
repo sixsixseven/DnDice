@@ -25,13 +25,14 @@ def dicer():
 	#	How many dice, and what size?
 	h = input("How many dice? > ")
 	i = input("What size of die? > ")
-	#	Append the value of each die into 'dice'.
+	#	Roll, increment the total, then append the value of each die into 'dice'.
 	for count in range(int(h)):
-		roll = secrets.randbelow(int(i) + 1)
+		roll = secrets.randbelow(int(i)) + 1	#	The +1 moves the index away from 0.
 		total += roll
 		dice.append(roll)
 
-	print(f"\nYou rolled the following: {h}d{i}.")
+	rollAverage = sum(dice)/len(dice)
+	print(f"\nYou rolled the following: {h}d{i}")
 	print(f"The face(s) of your dice read: {str(dice)[1:-1]}")
 	print(f"The total of your dice are: {total}\n")
 
